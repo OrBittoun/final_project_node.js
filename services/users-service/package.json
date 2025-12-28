@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js"
-
   },
   "keywords": [],
   "author": "",
@@ -14,6 +13,7 @@
   "type": "commonjs",
   "dependencies": {
     "dotenv": "^17.2.3",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.0.2"
   }
 }
