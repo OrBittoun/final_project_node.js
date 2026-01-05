@@ -1,5 +1,8 @@
+
 # Environment variables
 .env
 
 # Node
 node_modules/
+
+services/**/src/test-models.js
