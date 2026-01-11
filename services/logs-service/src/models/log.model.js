@@ -2,10 +2,7 @@
 
 const mongoose = require('mongoose');
 
-/*
-  Log Model (MongoDB collection: logs)
-  Will be used later for: logging every request + endpoint access.
-*/
+
 const logSchema = new mongoose.Schema(
     {
         method: { type: String, required: true, trim: true },
