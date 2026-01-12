@@ -2,34 +2,29 @@ const express = require('express');
 const app = express();
 
 require('dotenv').config();
-const connectDB = require('./config/db');
-
+const { connectToMongo } = require('./config/db');
 
 const PORT = process.env.PORT || 3002;
 
-
 const requestLogger = require('./middlewares/requestLogger');
-//const costsRoutes = require('./routes/costs.routes');
+const costsRoutes = require('./routes/costs.routes');
 
 app.use(requestLogger);
 app.use(express.json());
+app.use('/api', costsRoutes);
 
-
-
-
-
-//use('/api', costsRoutes);
-
-connectDB();
-
-
-
+connectToMongo()
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch((error) => {
+        console.error('Failed to connect to MongoDB:', error);
+        process.exit(1);
+    });
 
 app.get('/api/test', (req, res) => {
     res.json({ message: 'costs test ok' });
 });
-
-
 
 app.listen(PORT, () => {
     console.log(`Costs service running on port ${PORT}`);

@@ -10,6 +10,6 @@ app.use(requestLogger);
 
 app.use('/api', aboutRoutes);
 
-app.listen(process.env.PORT || 3003, () => {
+app.listen(process.env.PORT || 3004, () => {
     console.log('Admin service running');
 });
