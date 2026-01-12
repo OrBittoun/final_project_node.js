@@ -11,5 +11,5 @@ app.use(requestLogger);
 app.use('/api', aboutRoutes);
 
 app.listen(process.env.PORT || 3004, () => {
-    console.log('Admin service running');
+    console.log('Admin service running on port', process.env.PORT || 3004);
 });
