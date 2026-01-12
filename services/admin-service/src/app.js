@@ -1,12 +1,15 @@
 const express = require('express');
-const app = express();
+const requestLogger = require('./middleware/logger.middleware');
+const aboutRoutes = require('./routes/about.routes');
 
 require('dotenv').config();
 
-const PORT = process.env.PORT || 3001;
-
+const app = express();
 app.use(express.json());
+app.use(requestLogger);
 
-app.listen(PORT, () => {
-    console.log(`Costs service running on port ${PORT}`);
+app.use('/api', aboutRoutes);
+
+app.listen(process.env.PORT || 3003, () => {
+    console.log('Admin service running');
 });

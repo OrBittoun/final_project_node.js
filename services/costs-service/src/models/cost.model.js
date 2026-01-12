@@ -5,12 +5,7 @@ require('mongoose-double')(mongoose);
 
 const { Double } = mongoose.Schema.Types;
 
-/*
-  Cost Model (MongoDB collection: costs)
-  Required fields per project:
-  description (String), category (String), userid (Number), sum (Double)
-  date (Date) is used so the server can default to "now" when not provided.
-*/
+
 const costSchema = new mongoose.Schema(
     {
         description: { type: String, required: true, trim: true },
@@ -33,10 +28,3 @@ const costSchema = new mongoose.Schema(
 module.exports = mongoose.model('Cost', costSchema);
 
 
-/*
-מגדיר Schema בדיוק לפי הדרישות (כולל enum לקטגוריות)
-
-sum נשמר כ־Double
-
-מוסיף date אוטומטי “עכשיו” אם לא נשלח תאריך (כמו בדרישה)
- */

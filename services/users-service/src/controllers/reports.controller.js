@@ -12,7 +12,7 @@ const getMonthlyReport = async (userId, year, month) => {
     });
 
     if (existingReport) {
-        return existingReport; //computed pattern - if the report is existing it will return
+        return existingReport; //computed pattern - if the report is existing it be will return immediately
     }
 
     // else - we will create a new report
