@@ -1,19 +1,13 @@
-'use strict';
-
 const mongoose = require('mongoose');
 
-async function connectToMongo() {
-    const uri = process.env.MONGODB_URI;
-    if (!uri) {
-        throw new Error('Missing MONGODB_URI in .env');
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log('MongoDB connected successfully');
+    } catch (error) {
+        console.error('MongoDB connection error:', error.message);
+        process.exit(1);
     }
+};
 
-    await mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 });
-    return mongoose.connection;
-}
-
-async function disconnectFromMongo() {
-    await mongoose.disconnect();
-}
-
-module.exports = { connectToMongo, disconnectFromMongo };
+module.exports = connectDB;
