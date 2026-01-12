@@ -5,6 +5,7 @@ const addLog = async (logData) => {
     if (!logData || !logData.method || !logData.endpoint) {
         throw new Error('Missing required log fields');
     }
+
     const log = new Log(logData);
     await log.save();
     return log;

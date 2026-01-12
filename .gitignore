@@ -6,3 +6,5 @@
 node_modules/
 
 services/**/src/test-models.js
+services/**/src/test-controller.js
+
