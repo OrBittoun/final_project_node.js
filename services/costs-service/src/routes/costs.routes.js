@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-'use strict';
-=======
->>>>>>> origin/main
 
 const express = require('express');
 const { addCost } = require('../controllers/costs.controller');
