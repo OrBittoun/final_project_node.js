@@ -1,4 +1,3 @@
-'use strict';
 
 const Log = require('../models/log.model');
 
@@ -26,10 +25,7 @@ function buildLogDoc(input) {
         throw makeError(400, 'Missing endpoint');
     }
 
-    const doc = {
-        method: method,
-        endpoint: endpoint
-    };
+    const doc = { method, endpoint };
 
     // ++c status is optional, but if provided it must be a valid number
     if (input.status !== undefined && input.status !== null) {
@@ -60,8 +56,7 @@ function buildLogDoc(input) {
 /* ++c Add a new log record into MongoDB */
 async function addLog(logData) {
     const doc = buildLogDoc(logData);
-    const saved = await Log.create(doc);
-    return saved;
+    return Log.create(doc);
 }
 
 /* ++c Return all logs, newest first (useful for GET /api/logs later) */

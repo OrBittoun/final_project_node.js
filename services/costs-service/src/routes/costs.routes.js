@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 'use strict';
+=======
+>>>>>>> origin/main
 
 const express = require('express');
 const { addCost } = require('../controllers/costs.controller');
@@ -17,4 +20,6 @@ router.post('/add', async (req, res) => {
     }
 });
 
+
 module.exports = router;
+

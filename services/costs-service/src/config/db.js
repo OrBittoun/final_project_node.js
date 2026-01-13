@@ -1,10 +1,8 @@
-'use strict';
-
 const mongoose = require('mongoose');
 
 // Connect to MongoDB using MONGODB_URI from .env
 async function connectToMongo() {
-    const uri = process.env.MONGODB_URI;
+    const uri = process.env.MONGO_URI;
     if (!uri) {
         throw new Error('Missing MONGODB_URI in .env');
     }
@@ -21,11 +19,3 @@ async function disconnectFromMongo() {
 
 module.exports = { connectToMongo, disconnectFromMongo };
 
-
-/*
-מתחבר ל־MongoDB דרך MONGODB_URI
-
-אם אין משתנה בסביבה → זורק שגיאה ברורה
-
-מנתק בסוף (כדי שהריצה לא תיתקע)
- */

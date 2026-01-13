@@ -1,12 +1,5 @@
-'use strict';
-
 const ALLOWED_CATEGORIES = ['food', 'health', 'housing', 'sports', 'education'];
 
-/*
-  Error object format required by the project:
-  must include at least: { id, message }
-  We also attach "status" to help routes later decide HTTP status codes.
-*/
 function buildError(id, message, status) {
     const err = new Error(message);
     err.id = id;
@@ -24,14 +17,6 @@ function toNumber(val) {
     return Number.isFinite(n) ? n : NaN;
 }
 
-/*
-  Validation rules for adding a cost:
-  - description: non-empty string
-  - category: one of the allowed categories
-  - userid: finite number
-  - sum: finite number >= 0 (Double is enforced by schema, but we validate input too)
-  - date (optional): if provided, must NOT be in the past (server rule)
-*/
 function validateAddCostInput(input, nowDate) {
     const now = nowDate || new Date();
 
@@ -60,7 +45,7 @@ function validateAddCostInput(input, nowDate) {
 
     let date;
     if (input.date === undefined || input.date === null || input.date === '') {
-        date = now; // if not provided -> "request received time"
+        date = now; // if not provided - "request received time"
     } else {
         date = new Date(input.date);
         if (Number.isNaN(date.getTime())) {
@@ -81,14 +66,6 @@ function validateAddCostInput(input, nowDate) {
     };
 }
 
-/*
-  addCost
-  - Pure business logic (no Express).
-  - Receives dependencies to keep it testable:
-    deps.CostModel: mongoose model (required)
-    deps.createLog: optional function to create a log (Yahav will implement in logs.controller.js later)
-    deps.now: optional function returning Date (useful for tests)
-*/
 async function addCost(input, deps) {
     if (!deps || !deps.CostModel) {
         throw buildError(500, 'Missing CostModel dependency', 500);
@@ -114,7 +91,7 @@ async function addCost(input, deps) {
                 message: 'Cost created'
             });
         } catch (e) {
-            // do not fail the main operation if logging fails
+
         }
     }
 
@@ -122,11 +99,6 @@ async function addCost(input, deps) {
     return created.toObject ? created.toObject() : created;
 }
 
-/*
-  Helper for other controllers (users/reports) to reuse:
-  Returns all costs for a given userid in a given month/year.
-  (Or can use this inside reports.controller.js)
-*/
 async function getCostsByUserMonth(userid, year, month, deps) {
     if (!deps || !deps.CostModel) {
         throw buildError(500, 'Missing CostModel dependency', 500);
@@ -153,9 +125,6 @@ async function getCostsByUserMonth(userid, year, month, deps) {
     }
 }
 
-/*
-  Helper: total cost per user (useful for /api/users/:id in users.controller.js)
-*/
 async function getTotalCostByUser(userid, deps) {
     if (!deps || !deps.CostModel) {
         throw buildError(500, 'Missing CostModel dependency', 500);

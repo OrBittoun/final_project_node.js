@@ -39,11 +39,20 @@ const getUserDetails = async (userId) => {
         id: user.id,
         first_name: user.first_name,
         last_name: user.last_name,
+        birthday: user.birthday,
         total
     };
 
 }
 
+const getAllUsers = async () => {
+    return await User.find({}, {
+        _id: 0,
+        __v: 0
+    });
+};
+
+
 module.exports = {
-    addUser , getUserDetails
+    addUser , getUserDetails , getAllUsers
 };
