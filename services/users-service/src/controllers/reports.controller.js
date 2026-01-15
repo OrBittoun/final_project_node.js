@@ -42,7 +42,10 @@ const getMonthlyReport = async (userId, year, month) => {
 
             return response.data;
         } catch (err) {
-            throw new Error('Failed to fetch costs from costs-service');
+            if (err.response && err.response.status === 404) {
+                return [];
+            }
+            throw new Error('Costs service unavailable');
         }
     };
 

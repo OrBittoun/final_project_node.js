@@ -1,13 +1,16 @@
 const express = require('express');
+const costsRoutes = require('./routes/costs.routes');
+const { connectToMongo } = require('./config/db');
+const requestLogger = require('./middlewares/requestLogger');
+
+
+
 const app = express();
 
 require('dotenv').config();
-const { connectToMongo } = require('./config/db');
 
 const PORT = process.env.PORT || 3002;
 
-const requestLogger = require('./middlewares/requestLogger');
-const costsRoutes = require('./routes/costs.routes');
 
 app.use(requestLogger);
 app.use(express.json());
