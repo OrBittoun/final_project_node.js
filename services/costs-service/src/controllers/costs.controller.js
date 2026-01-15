@@ -52,6 +52,14 @@ function validateAddCostInput(input, nowDate) {
         if (Number.isNaN(date.getTime())) {
             throw buildError(400, 'Invalid date', 400);
         }
+
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const inputDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+        if (inputDate < today) { //date from the past
+            throw buildError(400, 'Cost date cannot be in the past', 400);
+        }
+
     }
 
     return {
