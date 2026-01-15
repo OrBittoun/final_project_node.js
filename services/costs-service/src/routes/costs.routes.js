@@ -1,10 +1,12 @@
-
 const express = require('express');
 const Cost = require('../models/cost.model');
 const { addCost, getCostsByUserMonth } = require('../controllers/costs.controller');
 
-
 const router = express.Router();
+
+router.get('/test', (req, res) => {
+    res.json({ message: 'costs test ok' });
+});
 
 router.post('/add', async (req, res) => {
     try {
@@ -33,7 +35,9 @@ router.get('/costs', async (req, res) => {
             year,
             month,
             { CostModel: Cost }
-        );        res.json(costs);
+        );
+
+        res.json(costs);
 
     } catch (err) {
         res.status(500).json({
@@ -42,6 +46,5 @@ router.get('/costs', async (req, res) => {
         });
     }
 });
-
 
 module.exports = router;
