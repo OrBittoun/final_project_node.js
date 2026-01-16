@@ -1,7 +1,7 @@
 import requests
 import sys
 
-filename = input("filename=")
+filename = "test1.txt"  # ⬅️ שנה את זה!
 output = open(filename, "w", encoding="utf-8")
 sys.stdout = output
 
@@ -16,9 +16,7 @@ print("costs =", costs_service)
 print("admin =", admin_service)
 print()
 
-
 # TEST 1 - Admin Service
-
 try:
     url = admin_service + "/api/about"
     data = requests.get(url)
@@ -34,9 +32,7 @@ except Exception as e:
 
 print("\n")
 
-
 # TEST 2 - Report BEFORE adding cost
-
 print("testing getting the report - before adding cost")
 
 try:
@@ -54,7 +50,6 @@ except Exception as e:
 print("\n")
 
 # TEST 3 - Add cost item
-
 print("testing adding cost item")
 
 try:
@@ -78,9 +73,7 @@ except Exception as e:
 
 print("\n")
 
-
 # TEST 4 - Report AFTER adding cost
-
 print("testing getting the report - after adding cost")
 
 try:
@@ -97,9 +90,7 @@ except Exception as e:
 
 print("\n")
 
-
 # TEST 5 - Logs
-
 print("testing sending log manually")
 
 try:
