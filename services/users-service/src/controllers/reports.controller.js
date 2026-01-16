@@ -2,10 +2,18 @@ const Report = require('../models/report.model');
 const User = require('../models/user.model');
 const axios = require('axios');
 
+// ⬇️ פונקציית עזר – קריאה ל-costs service
 const getCostsByUserAndMonth = async (userId, year, month) => {
     try {
+        console.log('DEBUG calling costs service with:', {
+            url: process.env.COSTS_SERVICE_URL,
+            userid: userId,
+            year,
+            month,
+        });
+
         const response = await axios.get(
-            `${process.env.COSTS_SERVICE_URL}/api/costs`, //call cost service
+            `${process.env.COSTS_SERVICE_URL}/api/costs`,
             {
                 params: {
                     userid: userId,
@@ -15,8 +23,23 @@ const getCostsByUserAndMonth = async (userId, year, month) => {
             }
         );
 
+        console.log('DEBUG costs service status:', response.status);
+        console.log(
+            'DEBUG costs service data:',
+            Array.isArray(response.data) ? response.data.slice(0, 2) : response.data
+        );
+        console.log(
+            'DEBUG costs service data length:',
+            Array.isArray(response.data) ? response.data.length : 'not array'
+        );
+
         return response.data;
     } catch (err) {
+        console.error('DEBUG error calling costs service:', err.message);
+        if (err.response) {
+            console.error('DEBUG costs service error status:', err.response.status);
+            console.error('DEBUG costs service error data:', err.response.data);
+        }
         if (err.response && err.response.status === 404) {
             return [];
         }
@@ -24,6 +47,7 @@ const getCostsByUserAndMonth = async (userId, year, month) => {
     }
 };
 
+// ⬇️ הפונקציה הראשית של הדו"ח
 const getMonthlyReport = async (userId, year, month) => {
     console.log('DEBUG getMonthlyReport called with:', { userId, year, month });
 
@@ -49,6 +73,8 @@ const getMonthlyReport = async (userId, year, month) => {
 
     for (const cost of costs) {
         const { category, sum, description, date } = cost;
+        console.log('DEBUG single cost:', cost);
+
         if (computedCosts[category]) {
             computedCosts[category].push({
                 sum,
@@ -63,7 +89,7 @@ const getMonthlyReport = async (userId, year, month) => {
     const report = await Report.findOneAndUpdate(
         { userid: userId, year, month },
         { userid: userId, year, month, costs: computedCosts },
-        { new: true, upsert: true } //if it's new create one , else update the report
+        { new: true, upsert: true }
     );
 
     console.log('DEBUG report after save:', report);
