@@ -1,7 +1,8 @@
 import requests
 import sys
+import json
 
-filename = "test3.txt"  # ⬅️ שנה את זה!
+filename = input("insert file name : ")
 output = open(filename, "w", encoding="utf-8")
 sys.stdout = output
 
@@ -16,42 +17,43 @@ print("costs =", costs_service)
 print("admin =", admin_service)
 print()
 
+
+def pretty_print_response(title, resp):
+    print(title)
+    print("url =", resp.url)
+    print("status_code =", resp.status_code)
+    try:
+        data = resp.json()
+        print("response_json_pretty =")
+        print(json.dumps(data, ensure_ascii=False, indent=4))
+    except Exception:
+        print("response_text =", resp.text)
+    print()
+
+
 # TEST 1 - Admin Service
 try:
     url = admin_service + "/api/about"
-    data = requests.get(url)
-
-    print("url =", url)
-    print("status_code =", data.status_code)
-    print("response_text =", data.text)
-    print("json =", data.json())
-
+    resp = requests.get(url)
+    pretty_print_response("TEST 1 - Admin Service", resp)
 except Exception as e:
-    print("problem")
+    print("problem in TEST 1")
     print(e)
-
-print("\n")
+    print()
 
 # TEST 2 - Report BEFORE adding cost
 print("testing getting the report - before adding cost")
-
 try:
     url = users_service + "/api/report?userid=123123&year=2026&month=1"
-    data = requests.get(url)
-
-    print("url =", url)
-    print("status_code =", data.status_code)
-    print("response_text =", data.text)
-
+    resp = requests.get(url)
+    pretty_print_response("TEST 2 - Report BEFORE", resp)
 except Exception as e:
-    print("problem")
+    print("problem in TEST 2")
     print(e)
-
-print("\n")
+    print()
 
 # TEST 3 - Add cost item
 print("testing adding cost item")
-
 try:
     url = costs_service + "/api/add"
     payload = {
@@ -60,39 +62,26 @@ try:
         "category": "food",
         "sum": 8
     }
-
-    data = requests.post(url, json=payload)
-
-    print("url =", url)
-    print("status_code =", data.status_code)
-    print("response_text =", data.text)
-
+    resp = requests.post(url, json=payload)
+    pretty_print_response("TEST 3 - Add cost", resp)
 except Exception as e:
-    print("problem")
+    print("problem in TEST 3")
     print(e)
-
-print("\n")
+    print()
 
 # TEST 4 - Report AFTER adding cost
 print("testing getting the report - after adding cost")
-
 try:
     url = users_service + "/api/report?userid=123123&year=2026&month=1"
-    data = requests.get(url)
-
-    print("url =", url)
-    print("status_code =", data.status_code)
-    print("response_text =", data.text)
-
+    resp = requests.get(url)
+    pretty_print_response("TEST 4 - Report AFTER", resp)
 except Exception as e:
-    print("problem")
+    print("problem in TEST 4")
     print(e)
-
-print("\n")
+    print()
 
 # TEST 5 - Logs
 print("testing sending log manually")
-
 try:
     url = logs_service + "/api/logs"
     payload = {
@@ -101,17 +90,11 @@ try:
         "status": 200,
         "message": "python test log"
     }
-
-    data = requests.post(url, json=payload)
-
-    print("url =", url)
-    print("status_code =", data.status_code)
-    print("response_text =", data.text)
-
+    resp = requests.post(url, json=payload)
+    pretty_print_response("TEST 5 - Logs", resp)
 except Exception as e:
-    print("problem")
+    print("problem in TEST 5")
     print(e)
-
-print("\n")
+    print()
 
 print("ALL TESTS FINISHED")

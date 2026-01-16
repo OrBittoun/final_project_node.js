@@ -1,5 +1,4 @@
 'use strict';
-
 const mongoose = require('mongoose');
 require('mongoose-double')(mongoose);
 

@@ -1,0 +1,105 @@
+logs = https://logs-service-0hie.onrender.com
+users = https://users-service-mrj2.onrender.com
+costs = https://final-project-node-js-b6sp.onrender.com
+admin = https://admin-service-bbhl.onrender.com
+
+TEST 1 - Admin Service
+url = https://admin-service-bbhl.onrender.com/api/about
+status_code = 200
+response_json_pretty =
+{
+    "team": [
+        {
+            "first_name": "Or",
+            "last_name": "Bittoun"
+        },
+        {
+            "first_name": "Odelya",
+            "last_name": "Datski"
+        },
+        {
+            "first_name": "Yahav",
+            "last_name": "Peretz"
+        }
+    ]
+}
+
+testing getting the report - before adding cost
+TEST 2 - Report BEFORE
+url = https://users-service-mrj2.onrender.com/api/report?userid=123123&year=2026&month=1
+status_code = 200
+response_json_pretty =
+{
+    "_id": "696a27b0d6102e34da09103f",
+    "userid": 123123,
+    "year": 2026,
+    "month": 1,
+    "__v": 0,
+    "costs": {
+        "food": [],
+        "health": [],
+        "housing": [],
+        "sports": [],
+        "education": []
+    },
+    "createdAt": "2026-01-16T11:57:36.475Z",
+    "updatedAt": "2026-01-16T11:57:36.475Z"
+}
+
+testing adding cost item
+TEST 3 - Add cost
+url = https://final-project-node-js-b6sp.onrender.com/api/add
+status_code = 201
+response_json_pretty =
+{
+    "description": "milk 9",
+    "category": "food",
+    "userid": 123123,
+    "sum": 8,
+    "date": "2026-01-16T11:57:37.871Z",
+    "_id": "696a27b16694e2364c9b638c"
+}
+
+testing getting the report - after adding cost
+TEST 4 - Report AFTER
+url = https://users-service-mrj2.onrender.com/api/report?userid=123123&year=2026&month=1
+status_code = 200
+response_json_pretty =
+{
+    "_id": "696a27b0d6102e34da09103f",
+    "userid": 123123,
+    "year": 2026,
+    "month": 1,
+    "__v": 0,
+    "costs": {
+        "food": [
+            {
+                "sum": 8,
+                "description": "milk 9",
+                "day": 16
+            }
+        ],
+        "health": [],
+        "housing": [],
+        "sports": [],
+        "education": []
+    },
+    "createdAt": "2026-01-16T11:57:36.475Z",
+    "updatedAt": "2026-01-16T11:57:39.174Z"
+}
+
+testing sending log manually
+TEST 5 - Logs
+url = https://logs-service-0hie.onrender.com/api/logs
+status_code = 200
+response_json_pretty =
+{
+    "method": "GET",
+    "endpoint": "/api/report",
+    "status": 200,
+    "message": "python test log",
+    "_id": "696a27b3058bcc2e53f89fdb",
+    "timestamp": "2026-01-16T11:57:39.696Z"
+}
+
+ALL TESTS FINISHED

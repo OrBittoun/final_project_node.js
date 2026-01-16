@@ -2,7 +2,6 @@ const Report = require('../models/report.model');
 const User = require('../models/user.model');
 const axios = require('axios');
 
-// ⬇️ פונקציית עזר – קריאה ל-costs service
 const getCostsByUserAndMonth = async (userId, year, month) => {
     try {
         console.log('DEBUG calling costs service with:', {
@@ -47,7 +46,6 @@ const getCostsByUserAndMonth = async (userId, year, month) => {
     }
 };
 
-// ⬇️ הפונקציה הראשית של הדו"ח
 const getMonthlyReport = async (userId, year, month) => {
     console.log('DEBUG getMonthlyReport called with:', { userId, year, month });
 
