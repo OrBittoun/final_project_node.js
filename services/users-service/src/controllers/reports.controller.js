@@ -16,7 +16,6 @@ const getMonthlyReport = async (userId, year, month) => {
     }
 
     const costs = await getCostsByUserAndMonth(userId, year, month);
-
     console.log('DEBUG costs from costs service:', costs);
 
     const computedCosts = { food: [], health: [], housing: [], sports: [], education: [] };
@@ -42,4 +41,7 @@ const getMonthlyReport = async (userId, year, month) => {
 
     console.log('DEBUG report after save:', report);
     return report;
+};
+module.exports = {
+    getMonthlyReport
 };
