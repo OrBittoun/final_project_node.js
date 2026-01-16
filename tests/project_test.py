@@ -1,7 +1,7 @@
 import requests
 import sys
 
-filename = "test2.txt"  # ⬅️ שנה את זה!
+filename = "test3.txt"  # ⬅️ שנה את זה!
 output = open(filename, "w", encoding="utf-8")
 sys.stdout = output
 
