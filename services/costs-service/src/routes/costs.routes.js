@@ -19,14 +19,17 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.get('/costs', async (req, res) => {
+
+router.get('/report', async (req, res) => {
     try {
-        const { userid, year, month } = req.query;
+
+        const userid = req.query.id || req.query.userid;
+        const { year, month } = req.query;
 
         if (!userid || !year || !month) {
             return res.status(400).json({
                 id: 400,
-                message: 'userid, year and month are required'
+                message: 'userid (or id), year and month are required'
             });
         }
 
